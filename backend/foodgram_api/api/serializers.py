@@ -155,15 +155,14 @@ class ReciepSerializers(serializers.ModelSerializer):
         )
         model = Recipe
 
-    def get_ingredients(sefl, obj):
+    def get_ingredients(self, obj):
         recipe = obj
-        ingredients = recipe.ingredients.values(
+        return recipe.ingredients.values(
             'id',
             'name',
             'measurement_unit',
             amount=F('recipe__amount')
         )
-        return ingredients
 
     def get_is_favorited(self, recipe: Recipe) -> bool:
         user = self.context.get('view').request.user
