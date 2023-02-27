@@ -176,11 +176,11 @@ DJOSER = {
         'user_create': 'api.serializers.UserSerializer',
         'user': 'api.serializers.UserSerializer',
         'current_user': 'api.serializers.UserSerializer',
-     },
+    },
     'PERMISSIONS': {
-         'user': ['djoser.permissions.CurrentUserOrAdminOrReadOnly'],
-         'user_list': ['rest_framework.permissions.IsAuthenticatedOrReadOnly'],
-     }
+        'user': ['djoser.permissions.CurrentUserOrAdminOrReadOnly'],
+        'user_list': ['rest_framework.permissions.IsAuthenticatedOrReadOnly'],
+    }
 }
 
 LOGGING = {

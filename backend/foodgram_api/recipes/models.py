@@ -67,10 +67,10 @@ class Recipe(models.Model):
         through='recipes.RecipeIngredient',
     )
     pub_data = models.DateTimeField(
-            verbose_name='Дата публикации',
-            auto_now_add=True,
-            editable=False,
-        )
+        verbose_name='Дата публикации',
+        auto_now_add=True,
+        editable=False,
+    )
     image = models.ImageField(
         verbose_name='Картинка готового блюда',
     )
