@@ -1,8 +1,8 @@
-from recipes.models import Ingredient, Recipe, Tag, RecipeIngredient  # Cart
-from rest_framework import serializers  # status
-from drf_extra_fields.fields import Base64ImageField
 from django.db.models import F
 from djoser.serializers import UserSerializer as DjoserUserSerializer
+from drf_extra_fields.fields import Base64ImageField
+from recipes.models import Ingredient, Recipe, RecipeIngredient, Tag  # Cart
+from rest_framework import serializers  # status
 from users.models import User
 
 
