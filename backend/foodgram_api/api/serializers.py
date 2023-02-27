@@ -1,11 +1,9 @@
-from recipes.models import Ingredient, Recipe, Tag, RecipeIngredient
-from rest_framework import serializers
+from recipes.models import Ingredient, Recipe, Tag, RecipeIngredient  # Cart
+from rest_framework import serializers  # status
 from drf_extra_fields.fields import Base64ImageField
-from django.contrib.auth import get_user_model
 from django.db.models import F
 from djoser.serializers import UserSerializer as DjoserUserSerializer
-
-User = get_user_model()
+from users.models import User
 
 
 class UserSerializer(DjoserUserSerializer):
@@ -178,3 +176,9 @@ class ReciepSerializers(serializers.ModelSerializer):
         if user.is_anonymous:
             return False
         return user.cart.filter(recipe=recipe).exists()
+
+    # def is_cart_exists(self, request):
+    #     user = request.user
+    #     if not Cart.objects.filter(user=user.id).exists():
+    #         return Response(
+    #             status=status.HTTP_400_BAD_REQUEST)

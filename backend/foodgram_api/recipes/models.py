@@ -1,7 +1,6 @@
 from django.db import models
-from django.contrib.auth import get_user_model
 from django.core.validators import MinValueValidator, MaxValueValidator
-User = get_user_model()
+from users.models import User
 
 
 class Tag(models.Model):
@@ -13,6 +12,9 @@ class Tag(models.Model):
         verbose_name = 'Тэг',
         verbose_name_plural = 'Тэги'
         ordering = ('name',)
+        indexes = [
+            models.Index(fields=['name'],),
+        ]
 
     def __str__(self) -> str:
         return f'{self.name} (цвет: {self.color})'
@@ -32,6 +34,9 @@ class Ingredient(models.Model):
         verbose_name = 'Ингридиент'
         verbose_name_plural = 'Ингридиенты'
         ordering = ('name',)
+        indexes = [
+            models.Index(fields=['name'],),
+        ]
 
     def __str__(self):
         return f'{self.name} {self.measurement_unit}'
@@ -80,6 +85,9 @@ class Recipe(models.Model):
         verbose_name = 'Рецепт'
         verbose_name_plural = 'Рецепты',
         ordering = ('-pub_data',)
+        indexes = [
+            models.Index(fields=['-pub_data'],),
+        ]
 
     def __str__(self) -> str:
         return f'{self.name}. Автор: {self.author.username}'

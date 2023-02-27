@@ -1,6 +1,6 @@
 from rest_framework import viewsets, status
 from recipes.models import (
-    Tag, Recipe, Ingredient, Cart, RecipeIngredient, FavoriteRecipes
+    Tag, Recipe, Ingredient, Cart, FavoriteRecipes
 )
 from api.serializers import (
     TagSerializers, IngredientSerializers, ReciepSerializers,
@@ -13,11 +13,11 @@ from .permissions import AdminOrReadOnly, AuthorAdminsOrReadOnly
 from django.contrib.auth import get_user_model
 from api.paginators import CustomPagination
 from api.checking import CustomChecking
-from django.db.models import Sum
 from django.http.response import HttpResponse
 from djoser.views import UserViewSet as DjoserUserViewSet
 from django_filters.rest_framework import DjangoFilterBackend
 from api.filters import IngredientFilter, RecipeFilter
+from api.services import create_shopping_cart
 
 
 User = get_user_model()
@@ -77,26 +77,30 @@ class RecipeViewSet(viewsets.ModelViewSet, CustomChecking):
             return Response(
                 status=status.HTTP_400_BAD_REQUEST
             )
-        filename = f'{user.username}_shopping_list.pdf'
-        shopping_list = [
-            f'Список покупок для: {user.first_name}\n'
-        ]
-        ingredients = RecipeIngredient.objects.filter(
-            recipe__in_cart__user=request.user
-        ).values(
-            'ingredients__name',
-            'ingredients__measurement_unit'
-        ).annotate(amount=Sum('amount'))
-        for ingredient in ingredients:
-            shopping_list.append(
-                f"{ingredient['indgredient__name']}:\
-                    {ingredient['amount']}\
-                    {ingredient['ingredient__measurement_unit']}"
-            )
+        # filename = f'{user.username}_shopping_list.txt'
+        # shopping_list = [
+        #     f'Список покупок для: {user.first_name}\n'
+        # ]
+        # ingredients = RecipeIngredient.objects.filter(
+        #     recipe__in_cart__user=request.user
+        # ).values(
+        #     'ingredients__name',
+        #     'ingredients__measurement_unit'
+        # ).annotate(amount=Sum('amount'))
+        # for ingredient in ingredients:
+        #     shopping_list.append(
+        #         f"{ingredient['indgredient__name']}:\
+        #             {ingredient['amount']}\
+        #             {ingredient['ingredient__measurement_unit']}"
+        #     )
+        # print(shopping_list)
         response = HttpResponse(
-            shopping_list, content_type='text.txt; charset=utf-8'
+            create_shopping_cart(request, request.user),
+            content_type='text/plain; charset=utf-8'
         )
-        response['Content-Disposition'] = f'attachment; filename={filename}'
+        response[
+            'Content-Disposition'
+        ] = 'attachment; filename=shopping_list.txt'
         return response
 
     @action(

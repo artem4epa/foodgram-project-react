@@ -1,6 +1,7 @@
 from django.contrib.auth.models import AbstractUser
 from django.db.models import (CharField, EmailField,
                               ManyToManyField)
+from django.db import models
 
 
 class User(AbstractUser):
@@ -41,6 +42,10 @@ class User(AbstractUser):
     class Meta:
         verbose_name = 'Пользователь'
         verbose_name_plural = 'Пользователи'
+        indexes = [
+            models.Index(fields=['last_name', 'first_name']),
+            models.Index(fields=['first_name'], name='first_name_idx'),
+        ]
 
     def __str__(self) -> str:
         return f'{self.username}: {self.email}'
