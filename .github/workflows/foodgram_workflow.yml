@@ -1,9 +1,5 @@
 name: Foodgram workflow
 
-on: [push]
-
-name: Foodgram Workflow
-
 on:
   push:
     branches: [ master ]
