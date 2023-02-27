@@ -44,7 +44,7 @@ jobs:
           context: ./backend
           file: ./api_yamdb/Dockerfile
           push: true
-          tags: artem4epa/foodgram-backend:latest
+          tags: ${{ secrets.DOCKER_USERNAME }}/foodgram-backend:latest
   build_and_push_frontend_to_docker_hub:
     name: Pushing frontend image to Docker Hub
     runs-on: ubuntu-latest
