@@ -17,7 +17,7 @@ services:
       - ./.env
   backend:
     container_name: app
-    build: ../backend/foodgram_api/
+    build: ./backend/foodgram_api/
     restart: always
     command: >
       bash -c "python manage.py migrate &&
