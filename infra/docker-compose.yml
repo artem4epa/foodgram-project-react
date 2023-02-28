@@ -2,10 +2,10 @@ version: '3.3'
 services:
 
   frontend:
-    container_name: front
+    container_name: frontend
     image: artem4epa/foodgram_frontend:latest
     volumes:
-      - ./frontend/:/app/result_build/
+      - ../frontend/:/app/result_build/
 
   db:
     container_name: db
