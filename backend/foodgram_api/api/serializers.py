@@ -6,6 +6,7 @@ from drf_extra_fields.fields import Base64ImageField
 from recipes.models import Ingredient, Recipe, RecipeIngredient, Tag  # Cart
 from rest_framework import serializers  # status
 from rest_framework.exceptions import ValidationError
+from rest_framework.fields import IntegerField
 from users.models import User
 
 
@@ -124,7 +125,7 @@ class IngredientSerializers(serializers.ModelSerializer):
 
 
 class RecipeIngredientSerializer(serializers.ModelSerializer):
-    id = serializers.PrimaryKeyRelatedField(queryset=Ingredient.objects.all())
+    id = IntegerField(write_only=True)
 
     class Meta:
         model = RecipeIngredient
