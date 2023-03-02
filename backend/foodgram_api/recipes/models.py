@@ -111,7 +111,7 @@ class RecipeIngredient(models.Model):
                 1
             ),
             MaxValueValidator(
-                100
+                1000
             ),
         )
     )
