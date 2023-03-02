@@ -3,7 +3,7 @@ from api.filters import IngredientFilter, RecipeFilter
 from api.paginators import CustomPagination
 from api.serializers import (FollowSerializer, IngredientSerializers,
                              ReciepReadSerializer, RecipeAbbSerializer,
-                             TagSerializers, RecipeWriteSerializer)
+                             RecipeWriteSerializer, TagSerializers)
 from api.services import create_shopping_cart
 from django.contrib.auth import get_user_model
 from django.http.response import HttpResponse
