@@ -2,8 +2,8 @@ from api.checking import CustomChecking
 from api.filters import IngredientFilter, RecipeFilter
 from api.paginators import CustomPagination
 from api.serializers import (FollowSerializer, IngredientSerializers,
-                             ReciepSerializers, RecipeAbbSerializer,
-                             TagSerializers)
+                             ReciepReadSerializer, RecipeAbbSerializer,
+                             TagSerializers, RecipeWriteSerializer)
 from api.services import create_shopping_cart
 from django.contrib.auth import get_user_model
 from django.http.response import HttpResponse
@@ -13,6 +13,7 @@ from djoser.views import UserViewSet as DjoserUserViewSet
 from recipes.models import Cart, FavoriteRecipes, Ingredient, Recipe, Tag
 from rest_framework import status, viewsets
 from rest_framework.decorators import action
+from rest_framework.permissions import SAFE_METHODS
 from rest_framework.response import Response
 
 from .permissions import AdminOrReadOnly, AuthorAdminsOrReadOnly
@@ -36,7 +37,6 @@ class IngredientViewSet(viewsets.ModelViewSet):
 
 class RecipeViewSet(viewsets.ModelViewSet, CustomChecking):
     queryset = Recipe.objects.select_related('author')
-    serializer_class = ReciepSerializers
     permission_classes = [AuthorAdminsOrReadOnly]
     pagination_class = CustomPagination
     filter_backends = [DjangoFilterBackend]
@@ -44,6 +44,11 @@ class RecipeViewSet(viewsets.ModelViewSet, CustomChecking):
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
+
+    def get_serializer_class(self):
+        if self.request.method in SAFE_METHODS:
+            return ReciepReadSerializer
+        return RecipeWriteSerializer
 
     @action(
         methods=['post', 'delete', ],
