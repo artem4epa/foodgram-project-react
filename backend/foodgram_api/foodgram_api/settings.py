@@ -118,8 +118,8 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.AllowAny',
     ],
-    'DEFAULT_PAGINATION_CLASS': 'api.paginators.CustomPagination',
-    'PAGE_SIZE': 6
+    # 'DEFAULT_PAGINATION_CLASS': 'api.paginators.CustomPagination',
+    # 'PAGE_SIZE': 6
 
 }
 
