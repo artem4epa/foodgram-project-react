@@ -1,6 +1,6 @@
+from django.db import transaction
 from django.db.models import F
 from django.shortcuts import get_object_or_404
-from django.db import transaction
 from djoser.serializers import UserSerializer as DjoserUserSerializer
 from drf_extra_fields.fields import Base64ImageField
 from recipes.models import Ingredient, Recipe, RecipeIngredient, Tag  # Cart
