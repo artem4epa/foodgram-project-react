@@ -129,7 +129,7 @@ class RecipeIngredientSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = RecipeIngredient
-        fields = ['id', 'amount']
+        fields = ('id', 'amount')
 
 
 class ReciepReadSerializer(serializers.ModelSerializer):
@@ -226,6 +226,8 @@ class RecipeWriteSerializer(serializers.ModelSerializer):
                     'amount': 'Количество ингредиента должно быть больше 0!'
                 })
             ingredients_list.append(ingredient)
+        print(ingredients_list)
+        print(value)
         return value
 
     def validate_tags(self, value):
@@ -247,7 +249,7 @@ class RecipeWriteSerializer(serializers.ModelSerializer):
     def create_ingredients_amounts(self, ingredients, recipe):
         RecipeIngredient.objects.bulk_create(
             [RecipeIngredient(
-                ingredients=Ingredient.objects.get(id=ingredient['id']),
+                ingredient=Ingredient.objects.get(id=ingredient['id']),
                 recipe=recipe,
                 amount=ingredient['amount']
             ) for ingredient in ingredients]
@@ -256,7 +258,9 @@ class RecipeWriteSerializer(serializers.ModelSerializer):
     @transaction.atomic
     def create(self, validated_data):
         tags = validated_data.pop('tags')
+        print(tags)
         ingredients = validated_data.pop('ingredients')
+        print(f'*******************{ingredients}********************')
         recipe = Recipe.objects.create(**validated_data)
         recipe.tags.set(tags)
         self.create_ingredients_amounts(recipe=recipe,
@@ -276,8 +280,8 @@ class RecipeWriteSerializer(serializers.ModelSerializer):
         instance.save()
         return instance
 
-    def to_representation(self, instance):
-        request = self.context.get('request')
-        context = {'request': request}
-        return ReciepReadSerializer(instance,
-                                    context=context).data
+    # def to_representation(self, instance):
+    #     request = self.context.get('request')
+    #     context = {'request': request}
+    #     return ReciepReadSerializer(instance,
+    #                                 context=context).data
