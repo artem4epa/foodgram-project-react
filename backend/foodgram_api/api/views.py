@@ -82,24 +82,6 @@ class RecipeViewSet(viewsets.ModelViewSet, CustomChecking):
             return Response(
                 status=status.HTTP_400_BAD_REQUEST
             )
-
-        # filename = f'{user.username}_shopping_list.txt'
-        # shopping_list = [
-        #     f'Список покупок для: {user.first_name}\n'
-        # ]
-        # ingredients = RecipeIngredient.objects.filter(
-        #     recipe__in_cart__user=request.user
-        # ).values(
-        #     'ingredients__name',
-        #     'ingredients__measurement_unit'
-        # ).annotate(amount=Sum('amount'))
-        # for ingredient in ingredients:
-        #     shopping_list.append(
-        #         f"{ingredient['indgredient__name']}:\
-        #             {ingredient['amount']}\
-        #             {ingredient['ingredient__measurement_unit']}"
-        #     )
-        # print(shopping_list)
         response = HttpResponse(
             create_shopping_cart(request, request.user),
             content_type='text/plain'
