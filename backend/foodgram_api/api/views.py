@@ -38,7 +38,8 @@ class IngredientViewSet(viewsets.ModelViewSet):
 
 
 class RecipeViewSet(viewsets.ModelViewSet, CustomChecking):
-    queryset = Recipe.objects.select_related('author')
+    # queryset = Recipe.objects.select_related('author')
+    queryset = Recipe.objects.all()
     permission_classes = [AuthorAdminsOrReadOnly]
     pagination_class = CustomPagination
     filter_backends = (DjangoFilterBackend,)

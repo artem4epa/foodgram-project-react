@@ -169,7 +169,8 @@ class ReciepReadSerializer(serializers.ModelSerializer):
         )
 
     def get_is_favorited(self, recipe: Recipe) -> bool:
-        user = self.context.get('view').request.user
+        user = self.context.get('request').user
+        print(user)
         if user.is_anonymous:
             return False
         return user.favorites.filter(recipe=recipe).exists()
