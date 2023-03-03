@@ -6,7 +6,7 @@ from api.serializers import (FollowSerializer, IngredientSerializers,
                              RecipeWriteSerializer, TagSerializers)
 from api.services import create_shopping_cart
 from django.contrib.auth import get_user_model
-from django.http.response import HttpResponse
+from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
 from django_filters.rest_framework import DjangoFilterBackend
 from djoser.views import UserViewSet as DjoserUserViewSet
@@ -82,6 +82,7 @@ class RecipeViewSet(viewsets.ModelViewSet, CustomChecking):
             return Response(
                 status=status.HTTP_400_BAD_REQUEST
             )
+
         # filename = f'{user.username}_shopping_list.txt'
         # shopping_list = [
         #     f'Список покупок для: {user.first_name}\n'
@@ -101,11 +102,11 @@ class RecipeViewSet(viewsets.ModelViewSet, CustomChecking):
         # print(shopping_list)
         response = HttpResponse(
             create_shopping_cart(request, request.user),
-            content_type='text/plain; charset=utf-8'
+            content_type='text/plain'
         )
         response[
             'Content-Disposition'
-        ] = 'attachment; filename=shopping_list.txt'
+        ] = ('attachment; filename=shopping_list.txt')
         return response
 
     @action(

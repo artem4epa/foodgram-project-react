@@ -9,8 +9,8 @@ def create_shopping_cart(request, user):
     ingredients = RecipeIngredient.objects.filter(
         recipe__in_cart__user=request.user
     ).values(
-        'ingredients__name',
-        'ingredients__measurement_unit'
+        'ingredient__name',
+        'ingredient__measurement_unit'
     ).annotate(amount=Sum('amount'))
     for ingredient in ingredients:
         shopping_list.append(
