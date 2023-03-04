@@ -66,5 +66,7 @@ python manage.py loaddata ingredients.json
 ### Автор бэкенда: 
 @artem4epa
 
+Данные для тестирования
+
 login: admin
 password: adminadmin
