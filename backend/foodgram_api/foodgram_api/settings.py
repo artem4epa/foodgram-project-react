@@ -69,8 +69,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'foodgram_api.wsgi.application'
 
 # FIXTURE_DIRS = "data" / BASE_DIR
-# Database
-# https://docs.djangoproject.com/en/3.2/ref/settings/#databases
+
 
 # DATABASES = {
 #     'default': {
