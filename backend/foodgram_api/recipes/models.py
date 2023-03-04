@@ -90,7 +90,7 @@ class Recipe(models.Model):
         ]
 
     def __str__(self) -> str:
-        return f'{self.name}. Автор: {self.author.username}'
+        return self.name
 
 
 class RecipeIngredient(models.Model):
