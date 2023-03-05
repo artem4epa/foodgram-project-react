@@ -68,5 +68,6 @@ python manage.py loaddata ingredients.json
 
 Данные для тестирования
 
+host: http://62.84.118.248
 login: admin
-password: adminadmin
+password: admin
